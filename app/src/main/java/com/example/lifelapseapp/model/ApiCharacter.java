@@ -10,13 +10,13 @@ import java.util.List;
 public class ApiCharacter implements Serializable {
 
     private String id;
-    private String name, status, species, type, gender, image;
+    private String name, status, species, type, gender, image, url;
     private List<String> episodes;
     private Location origin, currentLocation;
 
     public ApiCharacter(String id, String name, String status,
                         String species, String type, String gender,
-                        String image, List<String> episodes, Location origin,
+                        String image,String url, List<String> episodes, Location origin,
                         Location currentLocation) {
         this.id = id;
         this.name = name;
@@ -28,6 +28,15 @@ public class ApiCharacter implements Serializable {
         this.episodes = episodes;
         this.origin = origin;
         this.currentLocation = currentLocation;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getId() {
@@ -120,7 +129,8 @@ public class ApiCharacter implements Serializable {
                 "type: " + type + "\n" +
                 "gender: " + gender + "\n" +
                 "image: " + image + "\n" +
-                "episodes: " + episodes + "\n" +
+                "url: " + url + "\n\n" +
+                "episodes: " + episodes + "\n\n" +
                 "origin: " + origin + "\n" +
                 "currentLocation: " + currentLocation + "\n";
     }

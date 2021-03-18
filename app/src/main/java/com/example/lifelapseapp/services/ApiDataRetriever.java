@@ -2,7 +2,6 @@ package com.example.lifelapseapp.services;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -61,9 +60,7 @@ public class ApiDataRetriever {
 
     public void fetchData(String url, final Context context, final List<ApiCharacter> list, final MainRecyclerViewAdapter adapter, final PageInfo pageInfo) {
 
-        /**
-         * dialog while waiting to load data
-         */
+        //dialog while waiting to load data
         final AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setTitle("Fetching Data")
                 .setMessage("Please wait while we are fetching data")
@@ -72,9 +69,7 @@ public class ApiDataRetriever {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        /**
-         * Volley to fetch the result from API
-         */
+        // Volley to fetch the result from API
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -155,28 +150,31 @@ public class ApiDataRetriever {
         JSONObject locationObject = parser.parseObjectElement(LOCATION_TAG, element.toString());
         JSONObject originObject = parser.parseObjectElement(ORIGIN_TAG, element.toString());
         JSONArray episodes = parser.parseArrayElement(EPISODE_TAG, element.toString());
-        for (int i = 0; i < episodes.length(); i++) {
-            try {
-                episodesList.add(episodes.get(i).toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
+        if (episodes != null) {
+            for (int i = 0; i < episodes.length(); i++) {
+                try {
+                    episodesList.add(episodes.get(i).toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        ApiCharacter character = new ApiCharacter(
-                parser.parseStringElement(ID_TAG, element.toString()),
-                parser.parseStringElement(NAME_TAG, element.toString()),
-                parser.parseStringElement(STATUS_TAG, element.toString()),
-                parser.parseStringElement(SPECIES_TAG, element.toString()),
-                parser.parseStringElement(TYPE_TAG, element.toString()),
-                parser.parseStringElement(GENDER_TAG, element.toString()),
-                parser.parseStringElement(IMAGE_TAG, element.toString()),
+        String elementString = element.toString();
+        return new ApiCharacter(
+                parser.parseStringElement(ID_TAG, elementString),
+                parser.parseStringElement(NAME_TAG, elementString),
+                parser.parseStringElement(STATUS_TAG, elementString),
+                parser.parseStringElement(SPECIES_TAG, elementString),
+                parser.parseStringElement(TYPE_TAG, elementString),
+                parser.parseStringElement(GENDER_TAG, elementString),
+                parser.parseStringElement(IMAGE_TAG, elementString),
+                parser.parseStringElement(URL_TAG, elementString),
                 episodesList,
                 new Location(parser.parseStringElement(NAME_TAG, originObject.toString()),
                         parser.parseStringElement(URL_TAG, originObject.toString())),
                 new Location(parser.parseStringElement(NAME_TAG, locationObject.toString()),
                         parser.parseStringElement(URL_TAG, locationObject.toString()))
         );
-        return character;
     }
 }

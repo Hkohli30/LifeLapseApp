@@ -1,11 +1,13 @@
 package com.example.lifelapseapp.model;
 
 
+import java.io.Serializable;
+
 /**
  * Helps navigate through the pagination of the application
  * with next and prev url string
  */
-public class PageInfo {
+public class PageInfo implements Serializable {
 
     private String count, pages, next, prev;
 
