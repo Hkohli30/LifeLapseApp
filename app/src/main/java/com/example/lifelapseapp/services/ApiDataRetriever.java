@@ -131,10 +131,12 @@ public class ApiDataRetriever {
      */
     public PageInfo getPageInfoObject(JsonParser parser, PageInfo pageInfo, String responseData) {
         JSONObject jsonObject = parser.parseObjectElement(INFO_TAG, responseData);
-        pageInfo.setNext(parser.parseStringElement(NEXT_TAG, jsonObject));
-        pageInfo.setPrev(parser.parseStringElement(PREV_TAG, jsonObject));
-        pageInfo.setPages(parser.parseStringElement(PAGES_TAG, jsonObject));
-        pageInfo.setCount(parser.parseStringElement(COUNT_TAG, jsonObject));
+        if(jsonObject != null) {
+            pageInfo.setNext(parser.parseStringElement(NEXT_TAG, jsonObject));
+            pageInfo.setPrev(parser.parseStringElement(PREV_TAG, jsonObject));
+            pageInfo.setPages(parser.parseStringElement(PAGES_TAG, jsonObject));
+            pageInfo.setCount(parser.parseStringElement(COUNT_TAG, jsonObject));
+        }
         return pageInfo;
     }
 
